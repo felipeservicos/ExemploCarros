@@ -69,5 +69,6 @@
             <column name="rev"/>
         </createIndex>
     </changeSet>
+    <include file="db/changelog/23-01-changelog.sql"/>
 
 </databaseChangeLog>

@@ -14,6 +14,7 @@ public class Carro {
     @Column(name = "id", nullable = false)
     private Long id;
     private String modelo;
+    private String cor;
 
 
 }
