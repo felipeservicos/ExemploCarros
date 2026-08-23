@@ -68,5 +68,56 @@ liquibase \
     *   **O que faz:** Gera o código SQL que seria necessário para desfazer as mudanças que você *ainda vai* aplicar. É uma medida de segurança.
     *   **Para o leigo:** "Antes de eu atualizar o banco, me mostre como eu poderia desfazer essa atualização caso algo dê errado."
 
+7.  **`changelog-sync`**
+    *   **O que faz:** Marca todas as mudanças no seu arquivo de changelog como "já executadas" no banco de dados, sem realmente rodar o SQL.
+    *   **Para o leigo:** "Finja que você já rodou tudo o que está nos meus arquivos. Use isso quando o banco já estiver com as tabelas prontas e você só quiser que o Liquibase saiba disso (estabelecer uma **baseline**)."
+
+8.  **`update-sql`**
+    *   **O que faz:** Em vez de aplicar as mudanças no banco, ele apenas mostra na tela (ou gera um arquivo) o código SQL puro que seria executado.
+    *   **Para o leigo:** "Não altere nada ainda, apenas me mostre o código SQL que você gerou a partir do meu XML/YAML para que eu possa revisar ou entregar para um DBA."
+
+## 🔌 Plugins e Facilitadores (Scaffolding)
+
+No ecossistema Java/Spring, não precisamos escrever cada linha do XML de migração manualmente. Existem ferramentas que automatizam esse processo (**scaffolding**):
+
+*   **Liquibase Maven Plugin:** Permite rodar todos os comandos acima diretamente pelo Maven (ex: `mvn liquibase:update`). Isso facilita a integração em pipelines de CI/CD.
+*   **JPA Buddy (IntelliJ Plugin):** Esta é uma das ferramentas mais poderosas. Ela analisa suas entidades Java (classes com `@Entity`) e compara com o banco de dados real, gerando o arquivo de migration (XML, YAML ou SQL) automaticamente para você.
+
+## 🌐 Paralelo com o Mundo .NET Core
+
+Se você vem do C# / .NET Core, o conceito de Migrations é muito similar, mas as ferramentas mudam:
+
+| Característica | Java (Spring Boot) | .NET Core |
+| :--- | :--- | :--- |
+| **Ferramenta Principal** | Liquibase / Flyway | EF Core Migrations |
+| **Configuração** | XML, YAML, JSON ou SQL | Classes C# (Code-First) |
+| **Interface** | Shell / Maven / Gradle | Package Manager Console / dotnet CLI |
+| **Scaffolding** | JPA Buddy / Spring Data | `dotnet ef migrations add` |
+
+No .NET, o comando `dotnet ef database update` equivale ao `update` do Liquibase. O plugin **Entity Framework Core Power Tools** no Visual Studio faz um papel semelhante ao JPA Buddy, facilitando a engenharia reversa e a geração de diagramas e migrações.
+
+## 🛠️ Exemplo Prático: Adicionando o atributo "Cor"
+
+Imagine que precisamos adicionar a cor do carro. Usando o **JPA Buddy** ou o **Liquibase Maven Plugin**, o fluxo seria:
+
+1.  **Alteração no Código:** Você adiciona `private String cor;` na sua classe `Carro.java`.
+2.  **Geração da Migration:** O plugin detecta que a classe tem um campo novo que não existe no banco e gera algo assim:
+    ```xml
+    <changeSet id="12345-add-cor" author="felipe">
+        <addColumn tableName="carro">
+            <column name="cor" type="varchar(50)"/>
+        </addColumn>
+    </changeSet>
+    ```
+3.  **Execução:** Ao subir a aplicação ou rodar o `update`, o Liquibase cria a coluna automaticamente.
+
+### ⏪ E o Rollback nesse cenário?
+
+Se você perceber que a coluna "cor" não era necessária, o Liquibase facilita o retorno:
+
+*   **Comando:** `liquibase rollback-count 1`
+*   **O que acontece:** O Liquibase executa o comando inverso (`dropColumn`) para remover a coluna "cor" e remove o registro da tabela `DATABASECHANGELOG`.
+*   **Ajuda dos Plugins:** Ferramentas como o JPA Buddy já sugerem a estrutura do rollback automaticamente, garantindo que você tenha um caminho de volta seguro caso a migração cause problemas.
+
 ---
 *Este projeto foi estruturado para fins educacionais sobre arquitetura de software e persistência de dados.*
