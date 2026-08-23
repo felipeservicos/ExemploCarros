@@ -17,4 +17,7 @@ public class Carro {
     private String cor;
 
 
+//    @Column(name = "placa")
+//    private String placa;
+
 }
