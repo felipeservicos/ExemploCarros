@@ -71,7 +71,9 @@ liquibase \
 7.  **`changelog-sync`**
     *   **O que faz:** Marca todas as mudanças no seu arquivo de changelog como "já executadas" no banco de dados, sem realmente rodar o SQL.
     *   **Para o leigo:** "Finja que você já rodou tudo o que está nos meus arquivos. Use isso quando o banco já estiver com as tabelas prontas e você só quiser que o Liquibase saiba disso (estabelecer uma **baseline**)."
-
+> **Nota Importante:** O caminho definido para o primeiro changelog é muito importante. Conforme desse projeto: "spring.liquibase.change-log=classpath:/db/changelog/db.changelog-master.xml" ele traz o caminho relativo do arquivo inicial sugerido
+> "db.changelog-master.xml", este caminho precisa ser o mesmo em scripts do liquibase como no plugin do maven(pom.xml) ou gradle(build.gradle) e até mesmo usando o caminho completo em stages de pipeline. Caso o caminho seja diferente, teremos um erro na hora de rodar a aplicação com a migration
+> informando que as tabelas, ou atributos já existem e não podem ser criadas novamente.
 8.  **`update-sql`**
     *   **O que faz:** Em vez de aplicar as mudanças no banco, ele apenas mostra na tela (ou gera um arquivo) o código SQL puro que seria executado.
     *   **Para o leigo:** "Não altere nada ainda, apenas me mostre o código SQL que você gerou a partir do meu XML/YAML para que eu possa revisar ou entregar para um DBA."
