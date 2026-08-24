@@ -83,7 +83,7 @@
                 <artifactId>liquibase-maven-plugin</artifactId>
                 <version>${liquibase-maven-plugin.version}</version>
                 <configuration>
-                    <changeLogFile>src/main/resources/db/changelog/db.changelog-master.xml</changeLogFile>
+                    <changeLogFile>db/changelog/db.changelog-master.xml</changeLogFile>
                     <url>jdbc:mariadb://localhost:3306/exemplo_carros?useUnicode=yes&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC</url>
                     <username>user</username>
                     <password>senha123</password>
