@@ -84,6 +84,8 @@
                 <version>${liquibase-maven-plugin.version}</version>
                 <configuration>
                     <changeLogFile>db/changelog/db.changelog-master.xml</changeLogFile>
+                    <migrationSqlOutputFile>target/liquibase/migration.sql</migrationSqlOutputFile>
+                    <outputFile>target/liquibase/rollback.sql</outputFile>
                     <url>jdbc:mariadb://localhost:3306/exemplo_carros?useUnicode=yes&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC</url>
                     <username>user</username>
                     <password>senha123</password>
