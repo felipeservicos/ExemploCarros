@@ -55,7 +55,8 @@ liquibase \
 3.  **`rollback [tag/count/date]`**
     *   **O que faz:** Desfaz as alterações feitas no banco de dados. Você pode desfazer por uma quantidade de mudanças (ex: voltar 1 passo) ou até uma data específica.
     *   **Para o leigo:** "Eu cometi um erro! Por favor, desfaça a última alteração que eu fiz no banco de dados."
-    * Exemplo pelo maven: 'mvn liquibase:rollback '-Dliquibase.rollbackCount=1'
+    * Exemplo pelo maven: mvn liquibase:rollback '-Dliquibase.rollbackCount=1'
+    * Exemplo para analisar o rollback automático usando count: mvn liquibase:rollbackSQL '-Dliquibase.rollbackCount=1'
 4.  **`validate`**
     *   **O que faz:** Verifica se o seu arquivo de changelog está escrito corretamente e se não há erros de sintaxe.
     *   **Para o leigo:** "Confira se eu escrevi meus scripts de migração de forma correta antes de eu tentar rodar."
